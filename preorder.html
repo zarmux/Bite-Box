@@ -90,15 +90,7 @@
       const today = new Date().toISOString().split('T')[0];
       dateInput.min = today;
 
-      // Same backend-resolution logic as booking.js: GitHub Pages (and any
-      // host other than the Render app itself) must call the Render API
-      // over its full URL, since GitHub Pages cannot run server.js.
-      const BACKEND_URL = 'https://bite-box-cnna.onrender.com';
-      const isLocalHost = ['localhost', '127.0.0.1'].includes(window.location.hostname);
-      const isRenderHost = window.location.origin === BACKEND_URL;
-      const apiBaseUrl = isRenderHost
-        ? window.location.origin
-        : (isLocalHost ? `${window.location.protocol}//${window.location.host}` : BACKEND_URL);
+      const apiBaseUrl = window.location.origin;
 
       form.addEventListener('submit', async (event) => {
         event.preventDefault();

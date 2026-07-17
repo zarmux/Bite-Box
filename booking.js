@@ -1,5 +1,3 @@
-(function () {
-  function init() {
     const form = document.getElementById('reservation-form');
     const submitBtn = document.getElementById('submit-btn');
     const dateInput = document.getElementById('date');
@@ -12,17 +10,7 @@
 
     const today = new Date().toISOString().split('T')[0];
 
-    // The backend (server.js) lives on Render, since GitHub Pages / static
-    // hosts cannot run a Node/Express server. Any page that is NOT being
-    // served directly by that Render app (e.g. GitHub Pages, a local
-    // "Live Server", or opening the file directly) must call the Render
-    // API over its full URL instead of a relative path.
-    const BACKEND_URL = 'https://bite-box-cnna.onrender.com';
-    const isLocalHost = ['localhost', '127.0.0.1'].includes(window.location.hostname);
-    const isRenderHost = window.location.origin === BACKEND_URL;
-    const apiBaseUrl = isRenderHost
-      ? window.location.origin
-      : (isLocalHost ? `${window.location.protocol}//${window.location.host}` : BACKEND_URL);
+    const apiBaseUrl = window.location.origin;
 
     dateInput.min = today;
 
