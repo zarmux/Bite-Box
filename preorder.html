@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pre-order Food | BiteBox</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;1,700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="navbar">
+        <div class="logo">BiteBox</div>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="index.html#home">Home</a></li>
+                <li><a href="index.html#menu">Menu</a></li>
+                <li><a href="about.html">Our Story</a></li>
+                <li><a href="booktable.html" class="btn-small">Book a Table</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="preorder-section">
+        <div class="preorder-card">
+            <div class="preorder-intro">
+                <h2>Pre-order Your Food</h2>
+                <p>Select your favorite dishes and tell us when you are arriving. We will prepare everything before you come in.</p>
+            </div>
+
+            <form id="preorder-form" class="preorder-form">
+                <div class="form-field">
+                    <label for="preorder-name">Your Name</label>
+                    <input type="text" id="preorder-name" name="name" required>
+                </div>
+
+                <div class="form-field">
+                    <label for="preorder-phone">Phone Number</label>
+                    <input type="tel" id="preorder-phone" name="phone" required>
+                </div>
+
+                <div class="form-field">
+                    <label for="preorder-email">Email Address</label>
+                    <input type="email" id="preorder-email" name="email" required>
+                </div>
+
+                <div class="form-field">
+                    <label for="preorder-date">Arrival Date</label>
+                    <input type="date" id="preorder-date" name="date" required>
+                </div>
+
+                <fieldset class="menu-select-list">
+                    <legend>Select your dishes</legend>
+                    <label><input type="checkbox" name="items" value="Smoked BBQ Ribs"> Smoked BBQ Ribs</label>
+                    <label><input type="checkbox" name="items" value="Artisan Truffle Pizza"> Artisan Truffle Pizza</label>
+                    <label><input type="checkbox" name="items" value="Molten Lava Delight"> Molten Lava Delight</label>
+                    <label><input type="checkbox" name="items" value="Signature Truffle Mac & Cheese"> Signature Truffle Mac & Cheese</label>
+                    <label><input type="checkbox" name="items" value="Chargrilled Ribeye Steak"> Chargrilled Ribeye Steak</label>
+                    <label><input type="checkbox" name="items" value="Rustic Bruschetta"> Rustic Bruschetta</label>
+                </fieldset>
+
+                <fieldset class="menu-select-list">
+                    <legend>Drinks and Coffee</legend>
+                    <label><input type="checkbox" name="items" value="Velvet Brew"> Velvet Brew</label>
+                    <label><input type="checkbox" name="items" value="Midnight Roast"> Midnight Roast</label>
+                    <label><input type="checkbox" name="items" value="Golden Hour Mocha"> Golden Hour Mocha</label>
+                    <label><input type="checkbox" name="items" value="Citrus Splash"> Citrus Splash</label>
+                    <label><input type="checkbox" name="items" value="Caramel Macchiato Chill"> Caramel Macchiato Chill</label>
+                    <label><input type="checkbox" name="items" value="Matcha Zen"> Matcha Zen</label>
+                </fieldset>
+
+                <div class="form-field">
+                    <label for="preorder-notes">Special notes</label>
+                    <textarea id="preorder-notes" name="notes" placeholder="Tell us about allergies, spice level, or delivery preferences."></textarea>
+                </div>
+
+                <button type="submit" class="booking-submit" id="preorder-submit">Send Pre-order Request</button>
+            </form>
+        </div>
+    </section>
+
+    <footer id="contact">
+        <p>&copy; 2026 BiteBox. All rights reserved.</p>
+        <p>Opposite King Plaza | Tel: 7096090964</p>
+    </footer>
+
+    <script>
+      const form = document.getElementById('preorder-form');
+      const submitBtn = document.getElementById('preorder-submit');
+      const dateInput = document.getElementById('preorder-date');
+      const today = new Date().toISOString().split('T')[0];
+      dateInput.min = today;
+
+      // Same backend-resolution logic as booking.js: GitHub Pages (and any
+      // host other than the Render app itself) must call the Render API
+      // over its full URL, since GitHub Pages cannot run server.js.
+      const BACKEND_URL = 'https://bite-box-cnna.onrender.com';
+      const isLocalHost = ['localhost', '127.0.0.1'].includes(window.location.hostname);
+      const isRenderHost = window.location.origin === BACKEND_URL;
+      const apiBaseUrl = isRenderHost
+        ? window.location.origin
+        : (isLocalHost ? `${window.location.protocol}//${window.location.host}` : BACKEND_URL);
+
+      form.addEventListener('submit', async (event) => {
+        event.preventDefault();
+        const formData = new FormData(form);
+        const selectedItems = formData.getAll('items').join(', ');
+
+        if (!selectedItems) {
+          alert('Please select at least one dish.');
+          return;
+        }
+
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Sending...';
+
+try {
+          const response = await fetch(`${apiBaseUrl}/api/preorders`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              name: formData.get('name'),
+              phone: formData.get('phone'),
+              email: formData.get('email'),
+              date: formData.get('date'),
+              items: selectedItems,
+              notes: formData.get('notes')
+            })
+          });
+
+
+          const data = await response.json();
+          alert(data.message || 'Your pre-order request is received.');
+          if (response.ok) {
+            form.reset();
+            dateInput.min = today;
+          }
+        } catch (error) {
+          alert('Unable to send your pre-order request right now.');
+        } finally {
+          submitBtn.disabled = false;
+          submitBtn.textContent = 'Send Pre-order Request';
+        }
+      });
+    </script>
+</body>
+</html>

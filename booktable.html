@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book a Table | BiteBox</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;1,700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <header class="navbar">
+        <div class="logo">BiteBox</div>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="index.html#home">Home</a></li>
+                <li><a href="index.html#menu">Menu</a></li>
+                <li><a href="about.html">Our Story</a></li>
+                <li><a href="booktable.html" class="btn-small active">Book a Table</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="booking-section">
+        <div class="booking-header">
+            <h2>Book Your Table</h2>
+            <p>Secure your dining experience at BiteBox tonight.</p>
+        </div>
+
+        <div class="booking-form-box">
+            <form id="reservation-form" class="booking-form" novalidate>
+                <div class="form-field">
+                    <label for="name">Your Name</label>
+                    <input type="text" id="name" name="name" placeholder="Enter your full name" required>
+                </div>
+
+                <div class="form-field">
+                    <label for="phone">Phone Number</label>
+                    <input type="tel" id="phone" name="phone" placeholder="Enter phone number" required>
+                </div>
+
+                <div class="form-field">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" name="email" placeholder="Enter your email address" required>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-field">
+                        <label for="date">Date</label>
+                        <input type="date" id="date" name="date" required>
+                    </div>
+                    <div class="form-field">
+                        <label for="time">Time</label>
+                        <select id="time" name="time" required>
+                            <option value="" disabled selected>Choose a time</option>
+                            <option value="4pm">4:00 PM</option>
+                            <option value="5pm">5:00 PM</option>
+                            <option value="6pm">6:00 PM</option>
+                            <option value="7pm">7:00 PM</option>
+                            <option value="8pm">8:00 PM</option>
+                            <option value="9pm">9:00 PM</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-field">
+                    <label for="guests">Number of Guests</label>
+                    <input type="number" id="guests" name="guests" min="1" step="1" placeholder="Enter number of guests" required>
+                </div>
+
+                <button type="submit" class="booking-submit" id="submit-btn">
+                    Request Reservation
+                </button>
+
+            </form>
+        </div>
+    </section>
+
+    <footer id="contact">
+        <p>&copy; 2026 BiteBox. All rights reserved.</p>
+        <p>Opposite King Plaza | Tel: 7096090964</p>
+    </footer>
+
+    <!-- Success Modal -->
+    <div id="success-modal" class="modal-overlay">
+        <div class="modal-box modal-success">
+            <div class="modal-icon">✓</div>
+            <h3>Woohoo!</h3>
+            <p id="success-message">Pull up a chair, sit back and relax as your reservation is on its way to you!</p>
+            <button type="button" class="modal-btn" data-close-modal>Great, Thanks!</button>
+        </div>
+    </div>
+
+    <!-- Unavailable Modal -->
+    <div id="unavailable-modal" class="modal-overlay">
+        <div class="modal-box modal-unavailable">
+            <div class="modal-icon modal-icon-warn">!</div>
+            <h3>Table Not Available</h3>
+            <p>We're fully booked for this date and time. Our restaurant capacity is 60 guests per time slot. Please try a different time or date.</p>
+            <button type="button" class="modal-btn" data-close-modal>Choose Another Time</button>
+        </div>
+    </div>
+
+    <!-- Error Modal -->
+    <div id="error-modal" class="modal-overlay">
+        <div class="modal-box modal-error">
+            <div class="modal-icon modal-icon-warn">!</div>
+            <h3>Something Went Wrong</h3>
+            <p id="error-message">Please try again later.</p>
+            <button type="button" class="modal-btn" data-close-modal>Close</button>
+        </div>
+    </div>
+
+    <script src="booking.js"></script>
+</body>
+</html>
