@@ -1,3 +1,5 @@
+(function () {
+  function init() {
     const form = document.getElementById('reservation-form');
     const submitBtn = document.getElementById('submit-btn');
     const dateInput = document.getElementById('date');
@@ -10,6 +12,8 @@
 
     const today = new Date().toISOString().split('T')[0];
 
+    // The frontend and backend (server.js) are served by the same Render
+    // app, so the API is always reachable at the page's own origin.
     const apiBaseUrl = window.location.origin;
 
     dateInput.min = today;
